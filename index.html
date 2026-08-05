@@ -4,28 +4,111 @@
     <meta charset="UTF-8">
     <title>我的主页</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
             max-width: 600px;
-            margin: 80px auto;
+            margin: 60px auto;
             padding: 20px;
-            background: #f8f9fa;
+            background: #f0f4ff;
             color: #333;
         }
-        h1 { color: #2563eb; }
         .card {
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
         }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #2563eb;
+            margin-bottom: 20px;
+        }
+        h1 { color: #2563eb; font-size: 1.8rem; margin-bottom: 10px; }
+        .nav { margin: 25px 0; }
+        .nav a {
+            display: inline-block;
+            padding: 10px 24px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 24px;
+            font-size: 0.95rem;
+            transition: background 0.2s;
+        }
+        .nav a:hover { background: #1d4ed8; }
+        .clock-box {
+            margin-top: 30px;
+            padding: 16px;
+            background: #1e1b4b;
+            border-radius: 12px;
+            color: #a5f3fc;
+            font-family: "Consolas", "Courier New", monospace;
+        }
+        .clock-label {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #94a3b8;
+            margin-bottom: 4px;
+        }
+        .clock-time {
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+        .clock-date {
+            font-size: 0.85rem;
+            color: #c4b5fd;
+            margin-top: 4px;
+        }
+        p { line-height: 1.8; color: #555; margin: 10px 0; }
     </style>
 </head>
 <body>
     <div class="card">
+        <!-- 二次元头像 -->
+        <img class="avatar"
+             src="https://api.dicebear.com/7.x/avataaars/svg?seed=animegirl&backgroundColor=b6e3f4"
+             alt="头像">
+
         <h1>👋 你好，世界！</h1>
         <p>这是我的第一个网页，用 <strong>Claude Code</strong> 帮我创建的。</p>
         <p>今天是 2026 年 8 月 5 日，一切才刚刚开始。</p>
+
+        <!-- 关于我 链接 -->
+        <div class="nav">
+            <a href="about.html">🙋 关于我</a>
+        </div>
+
+        <!-- 24小时时钟 - 中国时间 -->
+        <div class="clock-box">
+            <div class="clock-label">北京时间</div>
+            <div class="clock-time" id="clock">--:--:--</div>
+            <div class="clock-date" id="date"></div>
+        </div>
     </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            // 中国时间 UTC+8
+            const cn = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Shanghai"}));
+            const h = String(cn.getHours()).padStart(2, "0");
+            const m = String(cn.getMinutes()).padStart(2, "0");
+            const s = String(cn.getSeconds()).padStart(2, "0");
+            document.getElementById("clock").textContent = h + ":" + m + ":" + s;
+
+            const days = ["日","一","二","三","四","五","六"];
+            const y = cn.getFullYear();
+            const M = String(cn.getMonth() + 1).padStart(2, "0");
+            const d = String(cn.getDate()).padStart(2, "0");
+            const w = days[cn.getDay()];
+            document.getElementById("date").textContent = y + "年" + M + "月" + d + "日 星期" + w;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
 </body>
 </html>
