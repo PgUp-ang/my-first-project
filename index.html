@@ -2,112 +2,356 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Edwin 的个人主页 - 记录学习与成长的数字空间">
+    <meta name="author" content="Edwin">
+    <title>Edwin 的主页</title>
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f0f4ff;
+            --card: #ffffff;
+            --text: #333333;
+            --text-light: #666666;
+            --border: #e2e8f0;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: "Microsoft YaHei", Arial, sans-serif;
-            max-width: 600px;
-            margin: 60px auto;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            max-width: 680px;
+            margin: 40px auto;
             padding: 20px;
-            background: #f0f4ff;
-            color: #333;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
         }
-        .card {
-            background: white;
+
+        /* ===== 个人卡片 ===== */
+        .hero-card {
+            background: var(--card);
             padding: 40px 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
             text-align: center;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease;
         }
+
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            border: 4px solid #2563eb;
+            border: 4px solid var(--primary);
             margin-bottom: 20px;
             object-fit: cover;
+            transition: transform 0.3s;
         }
-        h1 { color: #2563eb; font-size: 1.8rem; margin-bottom: 10px; }
-        .nav { margin: 25px 0; }
-        .nav a {
-            display: inline-block;
-            padding: 10px 24px;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 24px;
+        .avatar:hover { transform: scale(1.05); }
+
+        .hero-card h1 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .hero-card .subtitle {
+            color: var(--text-light);
             font-size: 0.95rem;
-            transition: background 0.2s;
+            margin-bottom: 8px;
         }
-        .nav a:hover { background: #1d4ed8; }
+
+        .hero-card .intro {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin-top: 12px;
+        }
+
+        /* ===== 导航按钮 ===== */
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            border-radius: 24px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.25s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37,99,235,0.35); }
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        .btn-outline:hover { background: #eff6ff; transform: translateY(-2px); }
+
+        /* ===== 北京时间时钟 ===== */
         .clock-box {
-            margin-top: 30px;
-            padding: 16px;
-            background: #1e1b4b;
-            border-radius: 12px;
+            margin-top: 28px;
+            padding: 18px;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            border-radius: 14px;
             color: #a5f3fc;
             font-family: "Consolas", "Courier New", monospace;
         }
         .clock-label {
-            font-size: 0.75rem;
-            letter-spacing: 2px;
+            font-size: 0.7rem;
+            letter-spacing: 3px;
             color: #94a3b8;
-            margin-bottom: 4px;
+            text-transform: uppercase;
+            margin-bottom: 2px;
         }
         .clock-time {
-            font-size: 2.2rem;
+            font-size: 2.4rem;
             font-weight: bold;
+            letter-spacing: 2px;
         }
         .clock-date {
             font-size: 0.85rem;
             color: #c4b5fd;
-            margin-top: 4px;
+            margin-top: 2px;
         }
-        p { line-height: 1.8; color: #555; margin: 10px 0; }
+
+        /* ===== 技能板块 ===== */
+        .section {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.6s ease;
+        }
+        .section:nth-child(3) { animation-delay: 0.1s; }
+        .section:nth-child(4) { animation-delay: 0.2s; }
+
+        .section h2 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+        .skill-chip {
+            background: #eff6ff;
+            color: var(--primary);
+            padding: 10px 14px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .skill-chip:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ===== 项目卡片 ===== */
+        .project-card {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 12px;
+            transition: all 0.25s;
+        }
+        .project-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 16px rgba(37,99,235,0.1);
+            transform: translateY(-2px);
+        }
+        .project-card h3 {
+            font-size: 1.05rem;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        .project-card .desc {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .project-card .tag {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #64748b;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            margin-top: 8px;
+        }
+
+        /* ===== 社交链接 ===== */
+        .social-links {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: #f8fafc;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #475569;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .social-link:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: #eff6ff;
+        }
+
+        /* ===== 页脚 ===== */
+        footer {
+            text-align: center;
+            padding: 24px 0;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        /* ===== 动画 ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 500px) {
+            body { margin: 20px auto; padding: 12px; }
+            .hero-card, .section { padding: 24px 18px; }
+            .hero-card h1 { font-size: 1.5rem; }
+            .clock-time { font-size: 1.8rem; }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <!-- 个人头像 -->
-        <img class="avatar" src="1.jpg" alt="头像">
 
-        <h1>👋 你好，世界！</h1>
-        <p>这是我的第一个网页，用 <strong>Claude Code</strong> 帮我创建的。</p>
-        <p>今天是 2026 年 8 月 5 日，一切才刚刚开始。</p>
+    <!-- ===== 个人卡片 ===== -->
+    <div class="hero-card">
+        <img class="avatar" src="1.jpg" alt="Edwin 的头像">
 
-        <!-- 关于我 链接 -->
-        <div class="nav">
-            <a href="about.html">🙋 关于我</a>
+        <h1>👋 你好，我是 Edwin</h1>
+        <p class="subtitle">学习者 · 创造者 · 探索者</p>
+        <p class="intro">
+            欢迎来到我的数字小窝 🏠<br>
+            正在用 <strong>Claude Code</strong> 和 <strong>Git</strong> 一点点搭建自己的世界。
+        </p>
+
+        <div class="nav-links">
+            <a class="btn btn-primary" href="about.html">🙋 关于我</a>
+            <a class="btn btn-outline" href="https://github.com/PgUp-ang" target="_blank">💻 GitHub</a>
         </div>
 
-        <!-- 24小时时钟 - 中国时间 -->
+        <!-- 北京时间 -->
         <div class="clock-box">
-            <div class="clock-label">北京时间</div>
+            <div class="clock-label">🕐 北京时间</div>
             <div class="clock-time" id="clock">--:--:--</div>
             <div class="clock-date" id="date"></div>
         </div>
     </div>
 
+    <!-- ===== 技能 ===== -->
+    <div class="section">
+        <h2>🛠 正在学习</h2>
+        <div class="skills-grid">
+            <div class="skill-chip">🌐 HTML</div>
+            <div class="skill-chip">🎨 CSS</div>
+            <div class="skill-chip">⚡ JavaScript</div>
+            <div class="skill-chip">🐙 Git & GitHub</div>
+            <div class="skill-chip">🤖 Claude Code</div>
+            <div class="skill-chip">💻 VS Code</div>
+        </div>
+    </div>
+
+    <!-- ===== 项目 ===== -->
+    <div class="section">
+        <h2>📂 我的项目</h2>
+
+        <div class="project-card">
+            <h3>🏠 个人主页</h3>
+            <p class="desc">就是你现在看到的这个网站！用纯 HTML + CSS + JS 手写，展示个人信息、技能和项目。</p>
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+        </div>
+
+        <div class="project-card">
+            <h3>🚧 下一个项目</h3>
+            <p class="desc">准备搭建一个更有趣的项目——可能是游戏、工具、或者学习笔记。敬请期待！</p>
+            <span class="tag">Coming Soon</span>
+        </div>
+    </div>
+
+    <!-- ===== 找到我 ===== -->
+    <div class="section">
+        <h2>🔗 找到我</h2>
+        <div class="social-links">
+            <a class="social-link" href="https://github.com/PgUp-ang" target="_blank">💻 GitHub</a>
+            <a class="social-link" href="mailto:1249988541@qq.com">📧 邮箱</a>
+        </div>
+    </div>
+
+    <!-- ===== 页脚 ===== -->
+    <footer>
+        <p>© 2026 <a href="https://github.com/PgUp-ang">Edwin</a> · 由 <a href="https://claude.ai/code" target="_blank">Claude Code</a> 辅助构建 · 保留所有权利</p>
+    </footer>
+
     <script>
         function updateClock() {
             const now = new Date();
-            // 中国时间 UTC+8
-            const cn = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Shanghai"}));
+            const cn = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Shanghai" }));
             const h = String(cn.getHours()).padStart(2, "0");
             const m = String(cn.getMinutes()).padStart(2, "0");
             const s = String(cn.getSeconds()).padStart(2, "0");
             document.getElementById("clock").textContent = h + ":" + m + ":" + s;
 
-            const days = ["日","一","二","三","四","五","六"];
+            const days = ["日", "一", "二", "三", "四", "五", "六"];
             const y = cn.getFullYear();
             const M = String(cn.getMonth() + 1).padStart(2, "0");
             const d = String(cn.getDate()).padStart(2, "0");
             const w = days[cn.getDay()];
-            document.getElementById("date").textContent = y + "年" + M + "月" + d + "日 星期" + w;
+            document.getElementById("date").textContent = y + "年" + M + "月" + d + "日  星期" + w;
         }
         updateClock();
         setInterval(updateClock, 1000);
     </script>
+
 </body>
 </html>
